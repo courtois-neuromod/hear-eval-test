@@ -60,7 +60,7 @@ def conv_pad_stride_pool(timestamps_in,padding,stride,pool):
 
 #### input : 22000 Hz, 32 padding before -> 
 
-sr=22000
+sr=22050
 period = 1/sr
 
 ### input signal : lsec is length in seconds 
@@ -98,8 +98,7 @@ X_conv7 = conv_pad_stride_pool(X_conv6,2,2,1)
 
 print(X.shape,X_conv1.shape,X_conv2.shape,X_conv3.shape,X_conv4.shape,X_conv5.shape,X_conv6.shape,X_conv7.shape)
 
-
-print(X_conv5)
-
+print(1/(X_conv4[1]- X_conv4[0]))
+print(X_conv4[5:])
 
 ## Hear benchmark recommends to return embeddings at least every 50 ms, which corresponds to a frequency of 20 Hz. So, embeddings of Conv4 would be fine. 
