@@ -3,7 +3,9 @@ import numpy as np
 from torch import load, device
 import torch
 from .model import SoundNetEncoding_conv
+from torchaudio.transforms import Resample
 
+resampling = Resample(48000, 22000)
 
 def load_model(model_file_path, device=None):
     if device is None:
@@ -17,7 +19,7 @@ def load_model(model_file_path, device=None):
     # Set model weights using checkpoint file
     model.load_state_dict(modeldict['checkpoint'])
 
-    model.sample_rate = 22050  # Input sample rate
+    model.sample_rate = 48000  # Input sample rate
     model.scene_embedding_size = 1024
     model.timestamp_embedding_size = 128
 
@@ -26,10 +28,11 @@ def load_model(model_file_path, device=None):
 
 def get_scene_embeddings(x, model):
 
+    x = resampling(x)
     audio_length = x.shape[1]
     batch_size = x.shape[0]
     minimum_length = 32000
-
+    
     x = x.reshape(batch_size, 1,audio_length,1)
 
     if audio_length < minimum_length:
@@ -48,9 +51,12 @@ def get_scene_embeddings(x, model):
 
 
 def get_timestamp_embeddings(x, model):
+
+    x = resampling(x)
     audio_length = x.shape[1]
     batch_size = x.shape[0]
     minimum_length = 32000
+
 
     x = x.reshape(batch_size, 1,audio_length,1)
 
@@ -68,11 +74,12 @@ def get_timestamp_embeddings(x, model):
     batch_size, frames_num, embedding_size = embs.shape
 
     ### perio and offset were estimated using soundnet architecture, taking into account paddings, strides and maxpool
-    offset = 0.03337868 * 1000
-    perio = 1000 / 24.609375
+    offset = 0.03345455 * 1000
+    perio = 1000 / 24.55357142857143
     nframes_neg = 5
-    time_steps = (torch.arange(frames_num-nframes_neg-1)[None, :] * perio) + offset    # (frames_num,)
+    nframes_end = 1
+    time_steps = (torch.arange(frames_num-nframes_neg-nframes_end)[None, :] * perio) + offset    # (frames_num,)
     time_steps = time_steps.repeat(batch_size, 1)   # (batch_size, frames_num)
     
     
-    return embs[:,nframes_neg:-1,:],time_steps
+    return embs[:,nframes_neg:-nframes_end,:],time_steps
