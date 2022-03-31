@@ -2,7 +2,10 @@
 
 [SoundNet](http://soundnet.csail.mit.edu/) brain encoding models, finetuned by Courtois Neuromod data and following the [HEAR api](https://neuralaudio.ai/hear2021-rules.html#common-api).
 
-The API gives a sample rate of 48 kHz to be able to use the zenodo datasets, but it will internally resample to SoundNet sample rate, which is 22.5 kHz. 
+Features : 
+- Returns Scene Embeddings (1024) using average output of the Conv7 layer
+- Returns TimeStamp Embeddings (128 x T) every 40.7 ms, usings outputs of Conv4 Layer.
+- The API gives a sample rate of 48 kHz to be able to use the zenodo datasets, but it will internally resample to SoundNet sample rate, which is 22.5 kHz. 
 
 ## Installation
 
