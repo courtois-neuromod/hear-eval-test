@@ -29,6 +29,3 @@ See on the [heareval repo](https://github.com/neuralaudio/hear-eval-kit) for ins
 
 ## Authors and acknowledgment
 Nicolas Farrugia, Maëlle Freteault. 
-
-## License
-For open source projects, say how it is licensed.
