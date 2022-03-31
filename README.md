@@ -5,7 +5,7 @@
 Features : 
 - Returns Scene Embeddings (1024) using average output of the Conv7 layer
 - Returns TimeStamp Embeddings (128 x T) and timestamps (T) every 40.7 ms, usings outputs of Conv4 Layer. Details on how timings were estimated are given in [timings.py](soundnetbrain_hear/timings.py)
-- The API gives a sample rate of 48 kHz to be able to use the zenodo datasets, but it will internally resample to SoundNet sample rate, which is 22.5 kHz. 
+- The API gives a sample rate of 48 kHz to be able to use the zenodo datasets, but it will internally resample to SoundNet sample rate, which is 22.050 kHz. 
 
 ## Installation
 
