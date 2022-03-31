@@ -8,7 +8,7 @@ Clone this repository and run this in the folder :
 
 `pip install -e .`
 
-# Validation 
+# Validation 
 
 The code should pass validation by the [Hear validator](https://github.com/neuralaudio/hear-validator) : 
 
