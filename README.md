@@ -16,7 +16,7 @@ The code should pass validation by the [Hear validator](https://github.com/neura
 
 `hear-validator soundnetbrain_hear --model /path/to/modefile.pt -d cpu`
 
-# Running the full evaluation 
+# Running the full evaluation 
 
 Install the [heareval package](https://github.com/neuralaudio/hear-eval-kit). Can be done with `pip install heareval`, but it might be more appropriate to use docker. 
 
