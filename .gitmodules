@@ -1,6 +1,3 @@
-[submodule "hear-eval-kit"]
-	path = hear-eval-kit
-	url = https://github.com/neuralaudio/hear-eval-kit
 [submodule "envs/hear-eval-kit"]
 	path = envs/hear-eval-kit
 	url = https://github.com/neuralaudio/hear-eval-kit
