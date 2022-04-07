@@ -9,9 +9,16 @@ Features :
 
 ## Installation
 
-Clone this repository and run this in the folder : 
+### Environement
 
-`pip install -e .`
+Clone this repository with sub-module:
+```
+git clone --recursive git@github.com:ltetrel/hear-eval-test.git
+```
+
+### Data
+
+Copy all pytorch checkpoints into `models`.
 
 ## Validation 
 
