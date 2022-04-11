@@ -21,8 +21,7 @@ install:
 # @python3 -m pip install -e .
 
 build:
-	@$(bash) soundnetbrain_hear/containers/build_sing.bash
-
+	@$(bash) soundnetbrain_hear/containers/build_sif.bash
 
 test: 
 	@singularity exec --nv /data/cisl/containers/hear-eval-kit.simg python3 -c "import tensorflow as tf; tf.test.is_gpu_available()"
