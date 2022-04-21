@@ -1,2 +1,3 @@
 hearvalidator==2021.0.5
+zenodo-get==1.3.4
 .
