@@ -12,22 +12,36 @@ Features :
 ### Environement
 
 Clone this repository with sub-module:
+
 ```
 git clone --recursive git@github.com:ltetrel/hear-eval-test.git
 ```
 
+#### Containers
+
+If you already have access to the built singularity image `soundnetbrain_hear.sif`, you can skip this step. Otherwise you will need to build it yourself.
+
+```
+make build
+```
+
 ### Data
 
-Copy all pytorch checkpoints into `models`.
+Copy all pytorch checkpoints into `models` from zenodo (to be published soon).
+You will also need to download benchmark data:
+
+```
+make data
+```
 
 ## Validation 
 
-The code should pass validation by the [Hear validator](https://github.com/neuralaudio/hear-validator) : 
+The code should pass validation by the [Hear validator](https://github.com/neuralaudio/hear-validator).
+Just run the following command on a GPU server with CUDA 11.2:
 
-`hear-validator soundnetbrain_hear --model /path/to/modefile.pt -d cpu`
-
-It also works on GPU now 
-`hear-validator soundnetbrain_hear --model /path/to/modefile.pt -d cuda`
+```
+make test
+```
 ## Running the full evaluation 
 
 Install the [heareval package](https://github.com/neuralaudio/hear-eval-kit). Can be done with `pip install heareval`, but it might be more appropriate to use docker. 
