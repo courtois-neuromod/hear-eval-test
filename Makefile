@@ -26,8 +26,16 @@ test:
 
 data:
 	@singularity exec --cleanenv --no-home -B data/:/soundnetbrain_hear/data --nv envs/soundnetbrain_hear.sif zenodo_get -o /soundnetbrain_hear/data 10.5281/zenodo.6332517
+	@$(bash) find . -name "*.tar.gz" -exec bash -c 'tar -xzvf "$0" -C "${0%/*}"; rm "$0"' {} \;
+	@$(bash) mv data/tasks/* data/*/tasks/ && rm -rf data/tasks
 # google cloud storage `gsutil` for other resolutions
 #	@singularity exec --cleanenv --no-home -B data/:/soundnetbrain_hear/data --nv envs/soundnetbrain_hear.sif gsutil -m cp -r "gs://hear2021-archive/tasks/16000"	"gs://hear2021-archive/tasks/22050"	"gs://hear2021-archive/tasks/32000"	"gs://hear2021-archive/tasks/44100"	"gs://hear2021-archive/tasks/48000" /soundnetbrain_hear/data
+
+embeddings:
+	@singularity exec --cleanenv --no-home --nv -B data/:/soundnetbrain_hear/data -B models/:/soundnetbrain_hear/models -B embeddings/:/soundnetbrain_hear/embeddings envs/soundnetbrain_hear.sif python3 -m heareval.embeddings.runner soundnetbrain_hear -d cuda --model /soundnetbrain_hear/models/voxels_conv5.pt --tasks-dir /soundnetbrain_hear/data/*/tasks/
+
+eval:
+	@singularity exec --cleanenv --no-home --nv -B data/:/soundnetbrain_hear/data -B models/:/soundnetbrain_hear/models -B embeddings/:/soundnetbrain_hear/embeddings envs/soundnetbrain_hear.sif python3 -m heareval.embeddings.runner soundnetbrain_hear -d cuda --model /soundnetbrain_hear/models/voxels_conv5.pt --tasks-dir /soundnetbrain_hear/data/*/tasks/
 
 clean:
 	@rm -Rf *.egg *.egg-info .cache .coverage .tox build dist docs/build htmlcov
