@@ -4,7 +4,7 @@ PACKAGE_NAME = $(shell python3 setup.py --name)
 PACKAGE_VERSION = $(shell python3 setup.py --version)
 USER = $(shell whoami)
 
-.PHONY: build test data clean
+.PHONY: build test data clean embeddings eval
 
 default:
 	@echo "Makefile for $(PACKAGE_NAME) $(PACKAGE_VERSION)"
