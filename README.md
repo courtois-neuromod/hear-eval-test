@@ -49,7 +49,7 @@ You will also need to download benchmark data:
 make data
 ```
 
-## Validation 
+## Test 
 
 The code should pass validation by the [Hear validator](https://github.com/neuralaudio/hear-validator).
 Just run the following command on a GPU server with CUDA 11.2:
@@ -59,11 +59,24 @@ make test
 ```
 ## Running the full evaluation 
 
-Install the [heareval package](https://github.com/neuralaudio/hear-eval-kit). Can be done with `pip install heareval`, but it might be more appropriate to use docker. 
+We will use the [heareval package](https://github.com/neuralaudio/hear-eval-kit) installed in the container to compute the embeddings from the `soundnetbrain_hear` model, and then evaluates those embeddings to test the performance of the encoding model.
 
-Heareval will need to run pytorch and tensorflow, both on GPUs. 
+### Embeddings
+To compute the embeddings run:
+```
+make embeddings
+```
 
-See on the [heareval repo](https://github.com/neuralaudio/hear-eval-kit) for instructions on how to download the datasets and run evaluation on models.
+When finished, you should ses a list of files under the `embeddings/soundentbrain_hear` folder.
+
+### Evaluation
+
+When the embeddings are create, you can launch:
+```
+make eval
+```
+
+You will find all logs in the `logs/` folder.
 
 ## Authors and acknowledgment
 Nicolas Farrugia, Maëlle Freteault. 
