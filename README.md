@@ -14,16 +14,31 @@ Features :
 Clone this repository with sub-module:
 
 ```
-git clone --recursive git@github.com:ltetrel/hear-eval-test.git
+git clone --recursive git@github.com:ltetrel/hear-eval-test.git && cd hear-eval-test
+```
+
+Please also load the singularity module:
+
+```
+module load singularity/3.8
 ```
 
 #### Containers
 
-If you already have access to the built singularity image `soundnetbrain_hear.sif`, you can skip this step. Otherwise you will need to build it yourself.
+If you already have access to the built singularity image `soundnetbrain_hear.sif`, you don't need to re-build the container.
+Just make a symlink to add it in the repository:
+
+```
+ln -s /PATH/TO/soundnetbrain_hear.sif envs/soundnetbrain_hear.sif
+```
+
+Otherwise you will need to build it yourself (you will need root access and Docker installed on your machine).
 
 ```
 make build
 ```
+
+Make sure that there is an existing `.sif` image in the `envs` directory.
 
 ### Data
 

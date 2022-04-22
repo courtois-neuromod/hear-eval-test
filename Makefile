@@ -21,11 +21,10 @@ build:
 	@$(bash) soundnetbrain_hear/containers/build_sif.bash
 
 test: 
-	@singularity exec --cleanenv --no-home --nv envs/soundnetbrain_hear.sif python3 -c "import tensorflow as tf; tf.test.is_gpu_available()"
-	@singularity exec --cleanenv --no-home -B models/:/soundnetbrain_hear/models --nv envs/soundnetbrain_hear.sif hear-validator soundnetbrain_hear --model /soundnetbrain_hear/models/voxels_conv5.pt -d cuda
+	@singularity exec --cleanenv --no-home --nv -B models/:/soundnetbrain_hear/models envs/soundnetbrain_hear.sif python3 -c "import tensorflow as tf; tf.test.is_gpu_available()" && hear-validator soundnetbrain_hear --model /soundnetbrain_hear/models/voxels_conv5.pt -d cuda
 
 data:
-	@singularity exec --cleanenv --no-home -B data/:/soundnetbrain_hear/data --nv envs/soundnetbrain_hear.sif zenodo_get -o /soundnetbrain_hear/data 10.5281/zenodo.6332517
+	@singularity exec --cleanenv --no-home -B data/:/soundnetbrain_hear/data --nv envs/soundnetbrain_hear.sif zenodo_get -o /soundnetbrain_hear/data/ 10.5281/zenodo.6332517
 	@$(bash) find . -name "*.tar.gz" -exec bash -c 'tar -xzvf "$0" -C "${0%/*}"; rm "$0"' {} \;
 	@$(bash) mv data/tasks/* data/*/tasks/ && rm -rf data/tasks
 # google cloud storage `gsutil` for other resolutions
@@ -35,7 +34,7 @@ embeddings:
 	@singularity exec --cleanenv --no-home --nv -B data/:/soundnetbrain_hear/data -B models/:/soundnetbrain_hear/models -B embeddings/:/soundnetbrain_hear/embeddings envs/soundnetbrain_hear.sif python3 -m heareval.embeddings.runner soundnetbrain_hear -d cuda --model /soundnetbrain_hear/models/voxels_conv5.pt --tasks-dir /soundnetbrain_hear/data/*/tasks/
 
 eval:
-	@singularity exec --cleanenv --no-home --nv -B data/:/soundnetbrain_hear/data -B models/:/soundnetbrain_hear/models -B embeddings/:/soundnetbrain_hear/embeddings envs/soundnetbrain_hear.sif python3 -m heareval.embeddings.runner soundnetbrain_hear -d cuda --model /soundnetbrain_hear/models/voxels_conv5.pt --tasks-dir /soundnetbrain_hear/data/*/tasks/
+  @$(bash) echo ""
 
 clean:
 	@rm -Rf *.egg *.egg-info .cache .coverage .tox build dist docs/build htmlcov
