@@ -34,7 +34,7 @@ embeddings:
 	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv -B data/:/soundnetbrain_hear/data -B models/:/soundnetbrain_hear/models -B embeddings/:/soundnetbrain_hear/embeddings envs/soundnetbrain_hear.sif python3 -m heareval.embeddings.runner soundnetbrain_hear --model /soundnetbrain_hear/models/voxels_conv5.pt --tasks-dir /soundnetbrain_hear/data/hear-2021.0.6/tasks/ --embeddings-dir /soundnetbrain_hear/embeddings
 
 eval:
-	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv -B embeddings/:/soundnetbrain_hear/embeddings envs/soundnetbrain_hear.sif python3 -m heareval.predictions.runner /soundnetbrain_hear/embeddings/soundnetbrain_hear/*
+	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv -B embeddings/:/soundnetbrain_hear/embeddings -B logs/:/soundnetbrain_hear/logs envs/soundnetbrain_hear.sif bash -c "cd /soundnetbrain_hear/ && python3 -m heareval.predictions.runner /soundnetbrain_hear/embeddings/soundnetbrain_hear/*"
 
 clean:
 	@rm -Rf *.egg *.egg-info .cache .coverage .tox build dist docs/build htmlcov

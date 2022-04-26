@@ -33,6 +33,7 @@ ln -s /PATH/TO/soundnetbrain_hear.sif envs/soundnetbrain_hear.sif
 ```
 
 Otherwise you will need to build it yourself (you will need root access and Docker installed on your machine).
+Make sure to have an account on https://quay.io/ because this is where singularity provides its latest images.
 
 ```
 make build
