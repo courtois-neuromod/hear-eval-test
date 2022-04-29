@@ -58,7 +58,7 @@ Just run the following command on a GPU server with CUDA 11.2:
 ```
 make test
 ```
-## Running the full evaluation 
+## Running the benchmark
 
 We will use the [heareval package](https://github.com/neuralaudio/hear-eval-kit) installed in the container to compute the embeddings from the `soundnetbrain_hear` model, and then evaluates those embeddings to test the performance of the encoding model.
 
