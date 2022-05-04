@@ -1,4 +1,5 @@
-git+https://github.com/courtois-neuromod/hear-eval-kit@9b6c521183f90386fdcc0ffdb12216a02189d082
+#git+https://github.com/courtois-neuromod/hear-eval-kit@9b6c521183f90386fdcc0ffdb12216a02189d082
+heareval==2021.1.2
 hearbaseline==2021.1.0
 zenodo-get==1.3.4
 .
