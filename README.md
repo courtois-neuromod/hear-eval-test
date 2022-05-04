@@ -66,18 +66,28 @@ make test
 We will use the [heareval package](https://github.com/neuralaudio/hear-eval-kit) installed in the container to compute the embeddings from the `soundnetbrain_hear` model, and then evaluates those embeddings to test the performance of the encoding model.
 
 ### Embeddings
-To compute the embeddings run:
+To compute the embeddings for all the datasets with `voxels_noft` model by default:
 ```
 make embeddings
 ```
 
-When finished, you should ses a list of files under the `embeddings/soundentbrain_hear` folder.
+When finished, you should see a list of files under the `embeddings/soundentbrain_hear` folder (one folder per task).
+
+If you want to instead run on a specific task for example `fsd50k`, and with another model:
+```
+make embeddings MODEL="voxels_conv5" RUN_ARGS="--task fsd50k-v1.0-full"
+```
 
 ### Evaluation
 
-When the embeddings are create, you can launch:
+When the embeddings are created for all datasets, you can launch:
 ```
 make eval
+```
+
+Again, if you are running a specific dataset, and another model:
+```
+make eval MODEL="voxels_conv5" TASK="fsd50k-v1.0-full"
 ```
 
 You will find all logs in the `logs/` folder.

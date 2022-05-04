@@ -6,6 +6,18 @@ USER = $(shell whoami)
 
 .PHONY: build test data clean embeddings eval
 
+# user args
+TASK = ""
+MODEL = "voxels_noft"
+
+# Add arguments to "make embeddings"
+ifeq (embeddings,$(firstword $(MAKECMDGOALS)))
+  # use the rest as arguments for "report"
+  RUN_ARGS := $(wordlist 2,$(words $(MAKECMDGOALS)),$(MAKECMDGOALS))
+  # ...and turn them into do-nothing targets
+  $(eval $(RUN_ARGS):;@:)
+endif
+
 default:
 	@echo "Makefile for $(PACKAGE_NAME) $(PACKAGE_VERSION)"
 	@echo
@@ -31,13 +43,12 @@ data:
 #	@singularity exec --cleanenv --no-home -B data/:/soundnetbrain_hear/data --nv envs/soundnetbrain_hear.sif gsutil -m cp -r "gs://hear2021-archive/tasks/16000"	"gs://hear2021-archive/tasks/22050"	"gs://hear2021-archive/tasks/32000"	"gs://hear2021-archive/tasks/44100"	"gs://hear2021-archive/tasks/48000" /soundnetbrain_hear/data
 
 embeddings:
-	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv --pwd /soundnetbrain_hear -B ./:/soundnetbrain_hear/ envs/soundnetbrain_hear.sif python3 -m heareval.embeddings.runner soundnetbrain_hear --model models/voxels_conv5.pt --tasks-dir data/hear-2021.0.6/tasks/
+	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv --pwd /soundnetbrain_hear -B ./:/soundnetbrain_hear/ envs/soundnetbrain_hear.sif python3 -m heareval.embeddings.runner soundnetbrain_hear --model models/$(MODEL).pt --embeddings-dir embeddings/soundnetbrain_hear/$(MODEL) --tasks-dir data/hear-2021.0.6/tasks/ $(RUN_ARGS)
 
 eval:
-	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv --pwd /soundnetbrain_hear -B ./:/soundnetbrain_hear/ envs/soundnetbrain_hear.sif python3 -m heareval.predictions.runner embeddings/soundnetbrain_hear/*
+	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv --pwd /soundnetbrain_hear -B ./:/soundnetbrain_hear/ envs/soundnetbrain_hear.sif python3 -m heareval.predictions.runner embeddings/soundnetbrain_hear/$(MODEL)/soundnetbrain_hear/$(TASK)*
 
 clean:
 	@rm -Rf *.egg *.egg-info .cache .coverage .tox build dist docs/build htmlcov
 	@find -depth -type d -name __pycache__ -exec rm -Rf {} \;
 	@find -type f -name '*.pyc' -delete
-
