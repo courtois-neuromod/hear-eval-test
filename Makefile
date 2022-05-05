@@ -4,7 +4,7 @@ PACKAGE_NAME = $(shell python3 setup.py --name)
 PACKAGE_VERSION = $(shell python3 setup.py --version)
 USER = $(shell whoami)
 
-.PHONY: build test data clean embeddings eval
+.PHONY: build test data clean embeddings eval report
 
 # user args
 TASK = ""
@@ -47,6 +47,9 @@ embeddings:
 
 eval:
 	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv --pwd /soundnetbrain_hear -B ./:/soundnetbrain_hear/ envs/soundnetbrain_hear.sif python3 -m heareval.predictions.runner embeddings/soundnetbrain_hear/$(MODEL)/soundnetbrain_hear/$(TASK)*
+
+report:
+	@export SINGULARITYENV_CUDA_VISIBLE_DEVICES=0 && singularity exec --cleanenv --no-home --nv --pwd /soundnetbrain_hear -B ./:/soundnetbrain_hear/ envs/soundnetbrain_hear.sif python3 soundnetbrain_hear/visualize.py
 
 clean:
 	@rm -Rf *.egg *.egg-info .cache .coverage .tox build dist docs/build htmlcov
