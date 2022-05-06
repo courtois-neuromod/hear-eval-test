@@ -46,7 +46,7 @@ def plot_metric(result_path="embeddings/soundnetbrain_hear/", figure_path="repor
     ax.yaxis.set_ticklabels([''] + models)
     ax.set_title(
         f"One specific metric per dataset and for all models")
-    plt.savefig(os.path.join(figure_path, "metrics.png"), bbox_inches='tight')
+    plt.savefig(os.path.join(figure_path, "metrics.png"))
 
 
 if __name__ == "__main__":
