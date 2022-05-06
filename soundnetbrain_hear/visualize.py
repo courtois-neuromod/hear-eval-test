@@ -19,9 +19,9 @@ def plot_metric(result_path="embeddings/soundnetbrain_hear/", figure_path="repor
     datasets = sorted([dataset for dataset in os.listdir(
         os.path.join(result_path, models[0], "soundnetbrain_hear"))])
     metric_results = []
-    for ii, model in enumerate(models):
+    for model in models:
         metric_models = []
-        for jj, dataset in enumerate(datasets):
+        for dataset in datasets:
             result_filepath = os.path.join(
                 result_path, model, "soundnetbrain_hear",  dataset, "test.predicted-scores.json")
             with open(result_filepath) as f:
@@ -33,19 +33,23 @@ def plot_metric(result_path="embeddings/soundnetbrain_hear/", figure_path="repor
                     print(f"{metric_name} for {dataset} and {model}:\t{score}")
         metric_results += [metric_models]
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(40, 15))
     cax = ax.matshow(metric_results)
+    fig.colorbar(cax, ax=ax)
     for (i, j), z in np.ndenumerate(metric_results):
         ax.text(j, i, '{:0.4f}'.format(z), ha='center', va='center',
                 bbox=dict(boxstyle='round', facecolor='white', edgecolor='0.3'))
-    fig.colorbar(cax)
     # fill x labels with dataset name and associated metric
     x_labels = [dataset_name + "_" +
                 metric_name for dataset_name in datasets for metric_name in KEY_DATASET_METRIC[dataset_name]]
-    ax.xaxis.set_ticklabels([''] + x_labels, rotation=60, ha="left")
-    ax.yaxis.set_ticklabels([''] + models)
+    ax.xaxis.set_ticks(range(len(x_labels)))
+    ax.xaxis.set_ticklabels(x_labels, rotation=60, ha="left")
+    #ax.xaxis.set_ticks_position("bottom") #use ha="right"
+    ax.yaxis.set_ticklabels([""] + models, va="bottom")
+    ax.set_xlabel("task")
+    ax.set_ylabel("model")
     ax.set_title(
-        f"One specific metric per dataset and for all models")
+        f"Hear benchmark test metrics")
     plt.savefig(os.path.join(figure_path, "metrics.png"))
 
 
