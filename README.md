@@ -33,7 +33,7 @@ ln -s /PATH/TO/soundnetbrain_hear.sif envs/soundnetbrain_hear.sif
 ```
 
 >**Note**  
->If you are in the [Neuromod team](https://docs.cneuromod.ca/en/2020-alpha/AUTHORS.html), you can find the environment at `narval:~/projects/def-pbellec/containers/soundnetbrain_hear.sif` and `elm:/data/cisl/containers/soundnetbrain_hear.sif`
+>If you are in the [Neuromod team](https://docs.cneuromod.ca/en/2020-alpha/AUTHORS.html), you can find the environment at `elm:/data/cisl/containers/soundnetbrain_hear.sif`
 
 Otherwise you will need to build it yourself (you will need root access and Docker installed on your machine).
 Make sure to have an account on https://quay.io/ because this is where singularity provides its latest images.
