@@ -92,5 +92,10 @@ make eval MODEL="voxels_conv5" TASK="fsd50k-v1.0-full"
 
 You will find all logs in the `logs/` folder.
 
+To save the training logs (which are not saved by `heareval`), redirect the output stream to a file.
+```
+make eval MODEL="voxels_conv5" TASK="fsd50k-v1.0-full" 2>&1 | tee eval_$(date +%s).log
+```
+
 ## Authors and acknowledgment
 Nicolas Farrugia, Maëlle Freteault. 
